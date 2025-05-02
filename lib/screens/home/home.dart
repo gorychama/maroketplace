@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maroketplace/screens/bookmarks/bookmarks.dart';
+import 'package:maroketplace/screens/profile/profile.dart';
 
 class ClassifiedHomeScreen extends StatefulWidget {
   const ClassifiedHomeScreen({Key? key}) : super(key: key);
@@ -33,6 +33,17 @@ class _ClassifiedHomeScreenState extends State<ClassifiedHomeScreen> {
           IconButton(
             icon: Icon(Icons.notifications_none, color: Colors.black),
             onPressed: () {},
+          ),
+           IconButton(
+            icon: Icon(Icons.settings, color: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen()
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -115,11 +126,11 @@ class _ClassifiedHomeScreenState extends State<ClassifiedHomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.green,
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   backgroundColor: Colors.green,
+      //   child: Icon(Icons.add),
+      // ),
   
     );
   }

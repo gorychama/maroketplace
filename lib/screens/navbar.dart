@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maroketplace/screens/bookmarks/bookmarks.dart';
 import 'package:maroketplace/screens/home/home.dart';
 import 'package:maroketplace/screens/listing/listing.dart';
+import 'package:maroketplace/screens/mapscreen.dart/mapscreen.dart';
 import 'package:maroketplace/screens/profile/profile.dart';
 
 class MainBottomNavBar extends StatefulWidget {
@@ -20,8 +21,8 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
     ClassifiedHomeScreen(),
     BookmarksScreen(),
     ListingScreen(),
-    ProfileScreen(), // Placeholder for Chat Screen
-    ProfileScreen(),
+    MapScreen(),
+    // ProfileScreen(),
   ];
 
   @override
@@ -31,15 +32,16 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
   }
 
   void _onItemTapped(int index) {
+    // if (index == 2) return; // FAB index handled separately
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  Icon _navIcon(IconData filled, IconData outlined, int index) {
+  Icon _navIcon(IconData icon, int index) {
     return Icon(
-      _selectedIndex == index ? filled : outlined,
-      color: _selectedIndex == index ? Colors.green : Colors.black54,
+      icon,
+      color: _selectedIndex == index ? Colors.green : Colors.grey,
     );
   }
 
@@ -48,36 +50,47 @@ class _MainBottomNavBarState extends State<MainBottomNavBar> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: _navIcon(Icons.home, Icons.home_outlined, 0),
-            label: 'Home',
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        onPressed: () {
+          setState(() {
+            _selectedIndex = 2;
+          });
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        elevation: 10,
+        color: Colors.white,
+        child: SizedBox(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: _navIcon(Icons.home, 0),
+                onPressed: () => _onItemTapped(0),
+              ),
+              IconButton(
+                icon: _navIcon(Icons.favorite_border, 1),
+                onPressed: () => _onItemTapped(1),
+              ),
+              const SizedBox(width: 40), // space for FAB
+              IconButton(
+                icon: _navIcon(Icons.list_alt, 2),
+                onPressed: () => _onItemTapped(2),
+              ),
+              IconButton(
+                icon: _navIcon(Icons.map_outlined, 3),
+                onPressed: () => _onItemTapped(3),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: _navIcon(Icons.favorite, Icons.favorite_border, 1),
-            label: 'Favori',
-          ),
-          BottomNavigationBarItem(
-            icon: _navIcon(Icons.list, 
-            Icons.list_alt_outlined, 2),
-            label: 'List',
-          ),
-          BottomNavigationBarItem(
-            icon: _navIcon(Icons.map, Icons.map_outlined, 3),
-            label: 'Map',
-          ),
-          BottomNavigationBarItem(
-            icon: _navIcon(Icons.person, Icons.person_outline, 4),
-            label: 'Profile',
-          ),
-        ],
+        ),
       ),
     );
   }
